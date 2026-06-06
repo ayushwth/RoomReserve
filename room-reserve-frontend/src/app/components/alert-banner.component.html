@@ -1,0 +1,14 @@
+<div *ngIf="alertMsg" class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 2000;">
+  <div class="toast-card glass d-flex align-items-center show" [ngClass]="alertMsg.type" role="alert">
+    <div class="d-flex w-100 align-items-center">
+      <div class="toast-icon">
+        <span *ngIf="alertMsg.type === 'success'">✔️</span>
+        <span *ngIf="alertMsg.type === 'error'">❌</span>
+      </div>
+      <div class="toast-body">
+        {{ alertMsg.text }}
+      </div>
+      <button type="button" class="btn-close btn-close-white ms-auto" aria-label="Close" (click)="clear()"></button>
+    </div>
+  </div>
+</div>

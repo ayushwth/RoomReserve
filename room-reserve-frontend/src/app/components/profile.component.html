@@ -1,0 +1,105 @@
+<app-alert-banner></app-alert-banner>
+<div class="workspace role-workspace">
+  <header class="role-hero profile-hero">
+    <div>
+      <p class="eyebrow">Profile Center</p>
+      <h1>{{ username() }}</h1>
+      <p class="hero-copy">Manage your account information, update your email, and change your password to keep your SmartReserve profile secure.</p>
+    </div>
+    <a class="btn btn-primary" [routerLink]="dashboardLink()">Back to workspace</a>
+  </header>
+
+  <div class="split-grid">
+    <!-- Profile Form Panel -->
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Edit Details</p>
+          <h3>Update Profile</h3>
+        </div>
+      </div>
+
+      <form [formGroup]="fg" (ngSubmit)="save()" class="form-grid">
+        <label class="span-2">
+          Full Name
+          <input class="form-control" formControlName="name" placeholder="Alice Smith" />
+          <small class="error-msg" *ngIf="fg.controls.name.touched && fg.controls.name.errors?.['required']">This field cannot be left empty.</small>
+        </label>
+
+        <label class="span-2">
+          Email address
+          <input type="email" class="form-control" formControlName="email" placeholder="alice@company.com" />
+          <small class="error-msg" *ngIf="fg.controls.email.touched && fg.controls.email.errors?.['required']">This field cannot be left empty.</small>
+          <small class="error-msg" *ngIf="fg.controls.email.touched && fg.controls.email.errors?.['pattern']">Please enter a valid email address (must contain @ and domain).</small>
+        </label>
+
+        <label class="span-2">
+          New Password (optional)
+          <input type="password" class="form-control" formControlName="password" placeholder="Leave blank to keep current password" autocomplete="new-password" />
+          <small class="error-msg" *ngIf="fg.controls.password.touched && fg.controls.password.invalid">Password must be at least 6 characters and contain both letters and numbers.</small>
+        </label>
+
+        <div class="action-row">
+          <button class="btn btn-primary" [disabled]="fg.invalid || isSaving">
+            {{ isSaving ? 'Saving Changes...' : 'Save Changes' }}
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Permissions Panel -->
+    <section class="panel">
+      <!-- Booking Statistics Dashboard -->
+      <div class="booking-stats-wrapper mb-4 pb-4 border-bottom">
+        <p class="eyebrow">Booking Summary</p>
+        <div class="booking-stats-grid">
+          <div class="stat-card pending">
+            <span class="stat-num">{{ pendingCount }}</span>
+            <span class="stat-label">Pending</span>
+          </div>
+          <div class="stat-card approved">
+            <span class="stat-num">{{ approvedCount }}</span>
+            <span class="stat-label">Approved</span>
+          </div>
+          <div class="stat-card cancelled">
+            <span class="stat-num">{{ cancelledCount }}</span>
+            <span class="stat-label">Cancelled</span>
+          </div>
+          <div class="stat-card rejected">
+            <span class="stat-num">{{ rejectedCount }}</span>
+            <span class="stat-label">Rejected</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Allowed Functions</p>
+          <h3>Visible to your role</h3>
+        </div>
+        <span class="status-chip">{{ roleLabel() }}</span>
+      </div>
+
+      <div class="permission-grid" *ngIf="isEmployee()">
+        <a routerLink="/calendar">Calendar</a>
+        <a routerLink="/book-room">Book Room</a>
+        <a routerLink="/book-amenities">Book Amenities</a>
+        <a routerLink="/my-bookings">My Bookings</a>
+      </div>
+
+      <div class="permission-grid" *ngIf="isAdmin()">
+        <a routerLink="/admin" [queryParams]="{ tab: 'rooms' }">Manage Rooms</a>
+        <a routerLink="/admin" [queryParams]="{ tab: 'resources' }">Manage Resources</a>
+        <a routerLink="/admin" [queryParams]="{ tab: 'calendar' }">Calendar</a>
+        <a routerLink="/admin" [queryParams]="{ tab: 'approvals' }">Approvals</a>
+        <a routerLink="/admin" [queryParams]="{ tab: 'settings' }">Facility Rules</a>
+        <a routerLink="/admin" [queryParams]="{ tab: 'compliance' }">Audit Logs</a>
+      </div>
+
+      <div class="permission-grid" *ngIf="isApprover()">
+        <a routerLink="/approver" [queryParams]="{ tab: 'queue' }">Pending Approvals</a>
+        <a routerLink="/calendar">Calendar</a>
+      </div>
+    </section>
+  </div>
+</div>

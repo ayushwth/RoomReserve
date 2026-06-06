@@ -1,0 +1,109 @@
+<section class="panel booking-surface">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Find Space</p>
+      <h3>Rooms Available</h3>
+    </div>
+    <span class="count-pill" *ngIf="searched">{{ filtered.length }} match{{ filtered.length === 1 ? '' : 'es' }}</span>
+  </div>
+
+  <form [formGroup]="fg" (ngSubmit)="search()" class="form-grid mb-4">
+    <label>Date<input type="date" class="form-control" formControlName="date" /></label>
+    <label>Start<input type="time" class="form-control" formControlName="start" /></label>
+    <label>End<input type="time" class="form-control" formControlName="end" /></label>
+    <label>Capacity<input type="number" min="1" class="form-control" formControlName="capacity" /></label>
+    <label>Amenity<select class="form-select" formControlName="equipment"><option value="">Any amenity</option><option *ngFor="let e of equipmentOptions" [value]="e">{{ e }}</option></select></label>
+    <label>Meeting title<input class="form-control" formControlName="title" /></label>
+    <label class="span-2">Description<textarea class="form-control" rows="2" formControlName="description"></textarea></label>
+    <button class="btn btn-primary span-2">Search Rooms</button>
+  </form>
+
+  <!-- Rooms Cards Grid -->
+  <div class="rooms-grid" *ngIf="searched && filtered.length > 0">
+    <div class="room-card" *ngFor="let room of pagedRooms">
+      <div class="room-header">
+        <h4 class="room-title">{{ room.name }}</h4>
+        <span class="approval-badge" [ngClass]="room.requiresApproval ? 'required' : 'instant'">
+          {{ room.requiresApproval ? 'Needs approval' : 'Book now' }}
+        </span>
+      </div>
+      <div class="room-body">
+        <div class="room-location" *ngIf="room.location">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          {{ room.location }}
+        </div>
+        <div class="room-meta">
+          <span class="meta-item">Seats: {{ room.capacity }}</span>
+        </div>
+        <div class="room-equipment" *ngIf="room.equipment">
+          <span class="equipment-badge" *ngFor="let eq of room.equipment.split(',')">{{ eq.trim() }}</span>
+        </div>
+      </div>
+      <div class="room-footer">
+        <button type="button" class="btn-book-room" (click)="openBookingModal(room)">Book Space</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="empty-state" *ngIf="!searched">Search a date and time to see live room availability.</p>
+  <p class="empty-state" *ngIf="searched && filtered.length === 0">No available rooms match this search.</p>
+
+  <div class="pager" *ngIf="filtered.length > pageSize">
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="page=page-1" [disabled]="page===0">Previous</button>
+    <span>{{ page + 1 }} / {{ totalPages }}</span>
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="page=page+1" [disabled]="page + 1 >= totalPages">Next</button>
+  </div>
+</section>
+
+<!-- Booking Modal Overlay -->
+<div class="modal-overlay" *ngIf="selectedRoom" (click)="closeBookingModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-header d-flex justify-content-between align-items-center pb-2 border-bottom">
+      <h3 class="modal-title m-0" style="color: var(--gold); font-weight: 800; text-shadow: 0 0 10px rgba(255, 197, 112, 0.3);">Request Booking</h3>
+      <button type="button" class="btn-close" (click)="closeBookingModal()" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-room-info">
+      <h4>{{ selectedRoom.name }}</h4>
+      <div class="room-location" *ngIf="selectedRoom.location" style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--steel); font-weight: bold; margin-bottom: 8px;">
+        <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; fill: var(--steel);"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        {{ selectedRoom.location }}
+      </div>
+      <div class="room-meta">
+        <span class="meta-item">Capacity: {{ selectedRoom.capacity }} Seats</span>
+        <span class="approval-badge" [ngClass]="selectedRoom.requiresApproval ? 'required' : 'instant'">
+          {{ selectedRoom.requiresApproval ? 'Requires Approval' : 'Instant Booking' }}
+        </span>
+      </div>
+      <div class="room-equipment" *ngIf="selectedRoom.equipment" style="margin-top: 8px;">
+        <span class="equipment-badge" *ngFor="let eq of selectedRoom.equipment.split(',')">{{ eq.trim() }}</span>
+      </div>
+    </div>
+
+    <form [formGroup]="bookingFg" (ngSubmit)="submitBooking()" class="form-grid modal-form-section">
+      <label>Date<input type="date" class="form-control" formControlName="date" /></label>
+      <label>Start Time<input type="time" class="form-control" formControlName="start" /></label>
+      <label>End Time<input type="time" class="form-control" formControlName="end" /></label>
+      <label>Capacity Required<input type="number" min="1" class="form-control" formControlName="capacity" /></label>
+      <label class="span-2">Event Title<input class="form-control" formControlName="title" placeholder="Meeting name" /></label>
+      <label class="span-2">Description<textarea class="form-control" rows="2" formControlName="description" placeholder="Optional notes..."></textarea></label>
+
+      <!-- Optional Amenities Selection inside Modal -->
+      <div class="span-2 mt-2" *ngIf="resources.length">
+        <p class="eyebrow mb-2">Request Shared Amenities</p>
+        <div class="modal-resource-picker">
+          <label class="modal-resource-line" *ngFor="let r of resources">
+            <input type="checkbox" [checked]="selectedResourceIds.has(r.id)" [disabled]="!r.active" (change)="toggleResource(r, $event)" />
+            <span>{{ r.name }}</span>
+            <small>{{ r.type || 'Resource' }} &middot; Qty {{ r.quantity || 1 }}</small>
+          </label>
+        </div>
+      </div>
+
+      <div class="action-row mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="bookingFg.invalid">Confirm Booking</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="closeBookingModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

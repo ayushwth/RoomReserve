@@ -1,0 +1,184 @@
+<app-alert-banner></app-alert-banner>
+
+<div class="workspace role-workspace user-home cinematic-container">
+  <!-- Interactive Animated Background Particles -->
+  <div class="particles-container">
+    <div class="particle p-1"></div>
+    <div class="particle p-2"></div>
+    <div class="particle p-3"></div>
+    <div class="particle p-4"></div>
+  </div>
+
+  <!-- Breathtaking Dynamic Welcome Hero -->
+  <header class="role-hero welcome-hero" [ngClass]="greetingClass">
+    <div class="welcome-copy-section">
+      <p class="eyebrow glow-text">SMARTRESERVE PLATFORM</p>
+      <h1 class="welcome-heading">{{ greeting }}, {{ displayName }}!</h1>
+      <p class="hero-copy">Manage your room reservations, select shared resources, and coordinate with teams instantly from one beautiful interface.</p>
+    </div>
+    
+    <!-- Real-time Digital Clock Card -->
+    <div class="live-clock-card glass">
+      <div class="clock-time">{{ liveTime }}</div>
+      <div class="clock-date">{{ liveDate }}</div>
+    </div>
+  </header>
+
+  <!-- Live Statistics Counters -->
+  <section class="stats-row" aria-label="Overview stats">
+    <div class="stat-widget glass">
+      <div class="stat-icon-wrapper">📅</div>
+      <div>
+        <span class="stat-val">{{ myBookingsToday }}</span>
+        <span class="stat-lbl">My Bookings Today</span>
+      </div>
+    </div>
+    <div class="stat-widget glass">
+      <div class="stat-icon-wrapper">🏢</div>
+      <div>
+        <span class="stat-val">{{ totalRooms }}</span>
+        <span class="stat-lbl">Meeting Spaces</span>
+      </div>
+    </div>
+    <div class="stat-widget glass">
+      <div class="stat-icon-wrapper">🔌</div>
+      <div>
+        <span class="stat-val">{{ totalResources }}</span>
+        <span class="stat-lbl">Shared Amenities</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Animated Action Center Grid -->
+  <section class="quick-lane cinematic-lane" aria-label="Available employee actions">
+    <a routerLink="/book-room" class="cinematic-action-card">
+      <div class="action-card-glow"></div>
+      <strong>Book Room</strong>
+      <small>Display spaces & book immediately</small>
+    </a>
+    <a routerLink="/book-amenities" class="cinematic-action-card">
+      <div class="action-card-glow"></div>
+      <strong>Book Amenities</strong>
+      <small>Shared projectors, mics, & accessories</small>
+    </a>
+    <a routerLink="/my-bookings" class="cinematic-action-card">
+      <div class="action-card-glow"></div>
+      <strong>My Bookings</strong>
+      <small>Track, cancel or edit reservations</small>
+    </a>
+    <a routerLink="/profile" class="cinematic-action-card">
+      <div class="action-card-glow"></div>
+      <strong>My Profile</strong>
+      <small>View counts & profile settings</small>
+    </a>
+  </section>
+
+  <!-- Premium Featured Spaces Gallery -->
+  <section class="featured-spaces-section mt-4 mb-4" aria-label="Featured spaces">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Interactive Space Preview</p>
+        <h3>Explore Featured Collaborative Rooms</h3>
+      </div>
+    </div>
+    <div class="spaces-grid">
+      <div class="space-card glass">
+        <div class="space-image-wrapper">
+          <img src="/images/room_boardroom.png" alt="Executive Boardroom" class="space-img">
+          <span class="space-badge">Active</span>
+        </div>
+        <div class="space-info">
+          <h4>Executive Boardroom</h4>
+          <p class="space-desc">High-tech executive space with oak finishes and full video conferencing setup.</p>
+          <div class="space-meta">
+            <span>👥 Max 12</span>
+            <span>🔌 VC Screen, Audio</span>
+          </div>
+          <a routerLink="/book-room" class="btn btn-sm btn-outline-warning w-100 mt-2">Book Boardroom</a>
+        </div>
+      </div>
+      
+      <div class="space-card glass">
+        <div class="space-image-wrapper">
+          <img src="/images/room_focus_pod.png" alt="Quiet Focus Pod" class="space-img">
+          <span class="space-badge">Active</span>
+        </div>
+        <div class="space-info">
+          <h4>Quiet Focus Pod</h4>
+          <p class="space-desc">Private soundproof capsule for deep-work focus sessions and direct calls.</p>
+          <div class="space-meta">
+            <span>👥 Max 1</span>
+            <span>🔌 Standing Desk, Silent</span>
+          </div>
+          <a routerLink="/book-room" class="btn btn-sm btn-outline-warning w-100 mt-2">Book Focus Pod</a>
+        </div>
+      </div>
+
+      <div class="space-card glass">
+        <div class="space-image-wrapper">
+          <img src="/images/room_creative_studio.png" alt="Creative Studio" class="space-img">
+          <span class="space-badge">Active</span>
+        </div>
+        <div class="space-info">
+          <h4>Creative Studio Layout</h4>
+          <p class="space-desc">Vibrant atmosphere with lounges, writable whiteboards, and sticky walls.</p>
+          <div class="space-meta">
+            <span>👥 Max 8</span>
+            <span>🔌 Lounges, Whiteboards</span>
+          </div>
+          <a routerLink="/book-room" class="btn btn-sm btn-outline-warning w-100 mt-2">Book Studio</a>
+        </div>
+      </div>
+
+      <div class="space-card glass">
+        <div class="space-image-wrapper">
+          <img src="/images/room_collab_hub.png" alt="Team Collaboration Hub" class="space-img">
+          <span class="space-badge">Active</span>
+        </div>
+        <div class="space-info">
+          <h4>Team Collaboration Hub</h4>
+          <p class="space-desc">Round-table layout with wireframing screens for rapid team prototyping.</p>
+          <div class="space-meta">
+            <span>👥 Max 6</span>
+            <span>🔌 Wireframe screen</span>
+          </div>
+          <a routerLink="/book-room" class="btn btn-sm btn-outline-warning w-100 mt-2">Book Collab Hub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Premium Interactive Marketing Carousel Showcase -->
+  <section class="marketing-carousel-section mt-4 pt-2">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">SmartReserve Highlights</p>
+        <h3>Optimize Your Space Coordination</h3>
+      </div>
+      <div class="carousel-nav-arrows">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="prevSlide()">Prev</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="nextSlide()">Next</button>
+      </div>
+    </div>
+
+    <div class="carousel-card glass">
+      <div class="carousel-content-wrapper">
+        <div class="carousel-slide-item" *ngFor="let s of slides; let i = index" [class.active]="i === activeSlideIndex">
+          <div class="slide-main-layout" *ngIf="i === activeSlideIndex">
+            <div class="slide-icon-wrapper">{{ s.icon }}</div>
+            <div class="slide-copy">
+              <span class="badge-accent">{{ s.badge }}</span>
+              <h4>{{ s.title }}</h4>
+              <p>{{ s.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Indicators dots -->
+      <div class="carousel-indicators-wrapper">
+        <button type="button" class="indicator-dot" *ngFor="let s of slides; let i = index" [class.active]="i === activeSlideIndex" (click)="selectSlide(i)"></button>
+      </div>
+    </div>
+  </section>
+</div>

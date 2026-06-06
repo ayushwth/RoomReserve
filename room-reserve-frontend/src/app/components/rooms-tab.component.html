@@ -1,0 +1,79 @@
+<div class="split-grid">
+  <section class="panel">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Inventory</p>
+        <h3>Meeting Rooms</h3>
+      </div>
+      <span class="count-pill">{{ rooms.length }}</span>
+    </div>
+    <div class="stack-list">
+      <button type="button" class="row-item" *ngFor="let r of rooms" (click)="edit(r)">
+        <span>
+          <strong>Room #{{ r.id }} &middot; {{ r.name }}</strong>
+          <small>{{ r.location || 'No location' }} &middot; {{ r.capacity }} seats &middot; {{ r.equipment || 'No amenities' }}</small>
+        </span>
+        <span class="d-flex gap-2">
+          <span class="status-chip" *ngIf="r.requiresApproval">Approval</span>
+          <span class="status-chip muted" *ngIf="!r.active">Inactive</span>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">{{ editing ? 'Update' : 'Create' }}</p>
+        <h3>{{ editing ? 'Edit Room' : 'New Room' }}</h3>
+      </div>
+    </div>
+    <form [formGroup]="fg" (ngSubmit)="save()" class="form-grid">
+      <label>Name<input class="form-control" formControlName="name" /></label>
+      <label>
+        Location
+        <select class="form-select" formControlName="location">
+          <option value="">Select Location</option>
+          <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
+        </select>
+      </label>
+      <label>
+        Capacity
+        <select class="form-select" formControlName="capacity">
+          <option *ngFor="let cap of capacities" [value]="cap">{{ cap }} seats</option>
+        </select>
+      </label>
+      
+      <div class="span-2 mt-2">
+        <p class="eyebrow mb-2">Room Amenities (Shared Resources)</p>
+        <div style="max-height: 150px; overflow-y: auto; border: 1px solid rgba(84, 119, 146, 0.4); padding: 10px; border-radius: 8px; background: rgba(15, 30, 60, 0.45);">
+          <div *ngFor="let res of resources" style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+            <input type="checkbox"
+                   [id]="'res-chk-' + res.id"
+                   [checked]="selectedResourceNames.has(res.name)"
+                   [disabled]="isResourceAssignedToOtherRoom(res.name)"
+                   (change)="toggleResource(res.name, $event)" />
+            <label [for]="'res-chk-' + res.id" style="font-size: 0.85rem; font-weight: 600; color: #ffffff; cursor: pointer; margin: 0;">
+              {{ res.name }}
+              <small style="color: var(--muted)">({{ res.type }})</small>
+              <small style="color: #ffc570; font-weight: bold; margin-left: 8px;" *ngIf="isResourceAssignedToOtherRoom(res.name) as roomName">
+                (Assigned to {{ roomName }})
+              </small>
+            </label>
+          </div>
+        </div>
+      </div>
+      <label class="toggle-line"><input type="checkbox" formControlName="active" /> Active</label>
+      <label class="toggle-line"><input type="checkbox" formControlName="requiresApproval" /> Requires approval</label>
+      <label class="toggle-line"><input type="checkbox" formControlName="maintenance" /> Under maintenance</label>
+      <label>Maintenance start<input type="datetime-local" class="form-control" formControlName="maintenanceStart" /></label>
+      <label>Maintenance end<input type="datetime-local" class="form-control" formControlName="maintenanceEnd" /></label>
+      <label class="span-2">Maintenance reason<input class="form-control" formControlName="maintenanceReason" /></label>
+      <div class="action-row">
+        <button class="btn btn-primary" [disabled]="fg.invalid">Save</button>
+        <button type="button" class="btn btn-danger" *ngIf="editing" (click)="deleteRoom()">Delete</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="reset()">Reset</button>
+      </div>
+    </form>
+  </section>
+</div>

@@ -1,0 +1,19 @@
+.compact-auth {
+  min-height: calc(100vh - 96px);
+}
+
+.signup-card {
+  width: min(520px, 100%);
+  margin: 0 auto;
+}
+
+.signup-card h1 {
+  margin: 0;
+  font-weight: 950;
+}
+
+.signup-card p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-weight: 650;
+}

@@ -1,0 +1,25 @@
+
+    <section class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">Governance</p><h3>Approver Queue</h3></div>
+      </div>
+      <div *ngIf="bookings.length===0" class="empty-state">No pending approvals</div>
+      <article *ngFor="let b of bookings" class="booking-card">
+        <div class="d-flex justify-content-between gap-2">
+          <strong>{{ b.title || 'Meeting' }}</strong>
+          <span class="status-chip">{{ b.status }}</span>
+        </div>
+        <small>{{ b.roomName || ('Room ' + b.roomId) }} · {{ b.startTime | date:'short' }} - {{ b.endTime | date:'short' }}</small>
+        <small>Requested by {{ b.createdBy }}</small>
+        <small *ngIf="b.resources?.length">Resources: {{ resourceSummary(b) }}</small>
+        <div class="action-row compact">
+          <button class="btn btn-sm btn-success me-2" (click)="decide(b.id, 'APPROVED')">Approve</button>
+          <button class="btn btn-sm btn-danger" (click)="openReject(b.id)">Reject</button>
+        </div>
+        <div *ngIf="rejectingId===b.id" class="mt-2">
+          <input class="form-control mb-1" [(ngModel)]="rejectReason" placeholder="Rejection reason" />
+          <button class="btn btn-sm btn-danger me-2" (click)="decide(b.id,'REJECTED')">Submit Rejection</button>
+          <button class="btn btn-sm btn-secondary" (click)="cancelReject()">Cancel</button>
+        </div>
+      </article>
+    </section>

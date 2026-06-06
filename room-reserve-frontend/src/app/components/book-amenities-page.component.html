@@ -1,0 +1,24 @@
+<app-alert-banner></app-alert-banner>
+<div class="workspace page-workspace amenities-page">
+  <header class="page-hero">
+    <div>
+      <p class="eyebrow">Amenities</p>
+      <h1>Reserve equipment with your room</h1>
+      <p class="hero-copy">Choose projectors, VC devices, microphones, and room kits while creating a booking. The backend checks resource quantity conflicts before confirming.</p>
+    </div>
+    <a class="btn btn-light" routerLink="/book-room">Book a room</a>
+  </header>
+
+  <section class="amenity-grid" aria-label="Available amenities">
+    <article class="feature-card" *ngFor="let resource of resources">
+      <span class="feature-icon">{{ (resource.type || resource.name || 'R').slice(0, 2).toUpperCase() }}</span>
+      <div>
+        <strong>{{ resource.name }}</strong>
+        <small>{{ resource.type || 'Shared resource' }} &middot; {{ resource.quantity || 1 }} available</small>
+      </div>
+    </article>
+    <p class="empty-state" *ngIf="resources.length === 0">No active amenities are available right now.</p>
+  </section>
+
+  <app-search-panel></app-search-panel>
+</div>

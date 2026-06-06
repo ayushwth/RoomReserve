@@ -1,0 +1,82 @@
+<app-alert-banner></app-alert-banner>
+<div class="workspace role-workspace approver-home cinematic-container">
+  <!-- Interactive Animated Background Particles -->
+  <div class="particles-container">
+    <div class="particle p-1"></div>
+    <div class="particle p-2"></div>
+    <div class="particle p-3"></div>
+    <div class="particle p-4"></div>
+  </div>
+
+  <header class="role-hero approver-hero" [ngClass]="greetingClass">
+    <div>
+      <p class="eyebrow glow-text">FACILITIES REVIEW</p>
+      <h1 class="welcome-heading">{{ greeting }}, {{ displayName }}!</h1>
+      <p class="hero-copy">Review restricted-room requests with context, approve or reject with reasons, and check schedule impact from focused pages.</p>
+    </div>
+    
+    <!-- Real-time Digital Clock Card -->
+    <div class="live-clock-card glass">
+      <div class="clock-time">{{ liveTime }}</div>
+      <div class="clock-date">{{ liveDate }}</div>
+    </div>
+  </header>
+
+  <!-- Centered Quick Lane Menu -->
+  <section class="quick-lane cinematic-lane approver-quick-lane" *ngIf="!active">
+    <a routerLink="/approver" [queryParams]="{ tab: 'queue' }"><strong>Approval Queue</strong><small>Approve or reject pending restricted-room bookings</small></a>
+    <a routerLink="/calendar"><strong>Calendar</strong><small>Check booking impact before decisions</small></a>
+  </section>
+
+  <!-- Interactive Approvals Dashboard Panel -->
+  <section class="approver-overview-section mt-4 mb-4" *ngIf="!active">
+    <div class="panel queue-analytics-card glass">
+      <div class="panel-header mb-3">
+        <h4 class="text-white font-weight-bold">📊 Decisions Analytics</h4>
+        <p class="text-muted small">Overview of reservation processing speed and approval rates.</p>
+      </div>
+      
+      <div class="analytics-metrics-row mb-4">
+        <div class="metric-block">
+          <span class="metric-val">94.8%</span>
+          <span class="metric-lbl">Approval Rate</span>
+        </div>
+        <div class="metric-block">
+          <span class="metric-val">4.2 min</span>
+          <span class="metric-lbl">Avg Response Time</span>
+        </div>
+        <div class="metric-block">
+          <span class="metric-val">0 min</span>
+          <span class="metric-lbl">SLA Violations</span>
+        </div>
+      </div>
+
+      <div class="queue-progress-wrapper">
+        <div class="d-flex justify-content-between text-white small mb-1">
+          <span>Decision Processing Progress</span>
+          <span>100% of SLA met</span>
+        </div>
+        <div class="progress" style="height: 10px; background: rgba(255,255,255,0.1);">
+          <div class="progress-bar" role="progressbar" style="width: 94.8%; background: var(--gold);" aria-valuenow="94.8" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simplified right-side card for approver -->
+    <div class="panel role-summary-card glass text-left p-3">
+      <h4 class="text-white font-weight-bold mb-1">Approver Summary</h4>
+      <p class="text-white small mb-2">Key actions for reviewing and deciding reservation requests.</p>
+      <ul class="text-muted small mb-3" style="line-height:1.5;">
+        <li style="color:rgb(166, 223, 153);">Open approval queue and process requests</li>
+        <li style="color:rgb(166, 223, 153);">Check calendar conflicts and SLA status</li>
+        <li style="color:rgb(166, 223, 153);">Record decision notes for audit</li>
+      </ul>
+      <div class="d-grid gap-2">
+        <a routerLink="/approver" [queryParams]="{ tab: 'queue' }" class="btn btn-outline-light btn-sm">Open Queue</a>
+        <a routerLink="/calendar" class="btn btn-outline-light btn-sm">View Calendar</a>
+      </div>
+    </div>
+  </section>
+
+  <app-approver-queue *ngIf="active === 'queue'"></app-approver-queue>
+</div>

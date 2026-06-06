@@ -1,0 +1,34 @@
+.admin-hero {
+  position: relative;
+  z-index: 1;
+  background: 
+    linear-gradient(135deg, rgba(26, 50, 99, 0.85), rgba(14, 27, 48, 0.9)), 
+    url("/images/admin_hero.png") center/cover !important;
+  border-left: 7px solid var(--gold) !important;
+  transition: all 1s ease;
+}
+
+.admin-hero.morning-theme {
+  background: 
+    linear-gradient(135deg, rgba(26, 50, 99, 0.85), rgba(255, 197, 112, 0.3)), 
+    url("/images/admin_hero.png") center/cover !important;
+  border-left-color: var(--gold) !important;
+}
+
+.admin-hero.afternoon-theme {
+  background: 
+    linear-gradient(135deg, rgba(26, 50, 99, 0.85), rgba(84, 119, 146, 0.45)), 
+    url("/images/admin_hero.png") center/cover !important;
+  border-left-color: var(--steel) !important;
+}
+
+.admin-hero.evening-theme {
+  background: 
+    linear-gradient(135deg, rgba(9, 21, 43, 0.9), rgba(26, 50, 99, 0.6)), 
+    url("/images/admin_hero.png") center/cover !important;
+  border-left-color: var(--gold) !important;
+}
+
+.active-panel {
+  min-height: 360px;
+}

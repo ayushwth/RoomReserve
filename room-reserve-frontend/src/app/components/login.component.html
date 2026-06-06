@@ -1,0 +1,36 @@
+<div class="auth-shell">
+  <section class="auth-panel">
+    <div class="auth-copy">
+      <p class="eyebrow">RoomReserve</p>
+      <h1>Sign in to your workspace</h1>
+      <p>Book rooms, reserve amenities, approve restricted spaces, and manage facility operations from one polished dashboard.</p>
+      <div class="auth-preview">
+        <span>Live room availability</span>
+        <span>Approval workflows</span>
+        <span>Audit-ready history</span>
+      </div>
+    </div>
+
+    <form [formGroup]="fg" (ngSubmit)="submit()" class="auth-card">
+      <div>
+        <p class="eyebrow">Secure Sign-In</p>
+        <h2>Welcome back</h2>
+      </div>
+      <label>
+        Username
+        <input id="login-username" class="form-control" formControlName="username" autocomplete="username" placeholder="e.g. alice" />
+        <small class="error-msg" *ngIf="fg.controls.username.touched && fg.controls.username.errors?.['required']">This field cannot be left empty.</small>
+      </label>
+      <label>
+        Password
+        <input id="login-password" type="password" class="form-control" formControlName="password" autocomplete="current-password" placeholder="Enter password" />
+        <small class="error-msg" *ngIf="fg.controls.password.touched && fg.controls.password.errors?.['required']">This field cannot be left empty.</small>
+      </label>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <a routerLink="/forgot-password" class="text-decoration-none small text-muted">Forgot password?</a>
+      </div>
+      <button class="btn btn-primary">Login</button>
+      <p class="auth-switch">Need an account? <a routerLink="/signup">Sign up</a></p>
+    </form>
+  </section>
+</div>

@@ -1,0 +1,34 @@
+<app-navbar></app-navbar>
+<main class="app-shell">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="app-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <span class="brand-logo">RR</span>
+      <strong>SmartReserve</strong>
+      <p>State-of-the-art office spaces & resources reservation ecosystem.</p>
+    </div>
+    <div class="footer-links">
+      <div class="links-col">
+        <strong>Workspace</strong>
+        <a routerLink="/calendar">Calendar</a>
+        <a routerLink="/book-room">Book Room</a>
+      </div>
+      <div class="links-col">
+        <strong>Platform</strong>
+        <a routerLink="/profile">My Profile</a>
+        <a routerLink="/my-bookings">My Bookings</a>
+      </div>
+      <div class="links-col">
+        <strong>Support</strong>
+        <a href="mailto:support@smartreserve.com">Helpdesk Support</a>
+        <span class="system-tag">SmartReserve Core v1.4</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 SmartReserve. All rights reserved.</p>
+  </div>
+</footer>

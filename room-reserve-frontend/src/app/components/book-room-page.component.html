@@ -1,0 +1,27 @@
+<app-alert-banner></app-alert-banner>
+<div class="workspace page-workspace booking-page">
+  <header class="page-hero">
+    <div>
+      <p class="eyebrow">Room Booking</p>
+      <h1>Find the right room, {{ username }}</h1>
+      <p class="hero-copy">Search by time, capacity, and amenities. Available rooms can be booked immediately, while restricted rooms enter the approval queue.</p>
+    </div>
+    <div class="hero-metrics">
+      <span><strong>Live</strong> backend availability</span>
+      <span><strong>Safe</strong> conflict checks</span>
+    </div>
+  </header>
+
+  <app-search-panel></app-search-panel>
+
+  <!-- Live Calendar Widget -->
+  <section class="live-calendar-section mt-5 pb-5">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Real-Time Schedule</p>
+        <h3>Live Bookings Calendar</h3>
+      </div>
+    </div>
+    <app-calendar-view></app-calendar-view>
+  </section>
+</div>

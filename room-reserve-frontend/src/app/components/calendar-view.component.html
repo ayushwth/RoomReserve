@@ -1,0 +1,71 @@
+    <section class="panel calendar-panel">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Schedule</p>
+          <h3>{{ viewDate | date:'fullDate' }}</h3>
+        </div>
+        <div class="segmented">
+          <button type="button" [class.active]="viewMode==='day'" (click)="viewMode='day'">Day</button>
+          <button type="button" [class.active]="viewMode==='week'" (click)="viewMode='week'">Week</button>
+          <button type="button" [class.active]="viewMode==='month'" (click)="viewMode='month'">Month</button>
+        </div>
+      </div>
+      <div class="calendar-controls">
+        <button class="btn btn-outline-secondary btn-sm" (click)="prev()">Previous</button>
+        <input type="date" class="form-control" [value]="dateInput" (change)="pickDate($event)" />
+        <button class="btn btn-outline-secondary btn-sm" (click)="next()">Next</button>
+      </div>
+      <!-- Month View -->
+      <div class="month-grid" *ngIf="viewMode==='month'">
+        <div class="month-day-name" *ngFor="let day of dayNames">{{ day }}</div>
+        <button type="button" class="month-cell" *ngFor="let cell of monthCells" [class.outside]="cell.outside" [class.selected]="sameDay(cell.date, viewDate)" (click)="viewDate=cell.date; viewMode='day'">
+          <strong>{{ cell.date | date:'d' }}</strong>
+          <div class="cell-bookings-list" *ngIf="bookingsOn(cell.date).length">
+            <div class="cell-booking-item" *ngFor="let b of bookingsOn(cell.date) | slice:0:3" [class.pending]="b.status==='PENDING'">
+              <span class="b-time">{{ b.startTime | date:'h:mm a' }}</span>
+              <span class="b-title">{{ b.title || 'Meeting' }}</span>
+              <span class="b-room">({{ b.roomName || b.roomId }})</span>
+            </div>
+            <span class="more-indicator" *ngIf="bookingsOn(cell.date).length > 3">+{{ bookingsOn(cell.date).length - 3 }} more</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Week View -->
+      <div class="week-grid" *ngIf="viewMode==='week'">
+        <div class="week-day-col" *ngFor="let day of weekDays" [class.today]="sameDay(day, today)" [class.selected]="sameDay(day, viewDate)">
+          <div class="week-day-header" (click)="viewDate=day; viewMode='day'">
+            <strong>{{ day | date:'EEE' }}</strong>
+            <small>{{ day | date:'MMM d' }}</small>
+          </div>
+          <div class="week-day-bookings">
+            <div *ngFor="let b of bookingsOn(day)" class="week-booking-card" [class.pending]="b.status==='PENDING'">
+              <div class="time-slot">{{ b.startTime | date:'shortTime' }} - {{ b.endTime | date:'shortTime' }}</div>
+              <div class="booking-title">{{ b.title || 'Meeting' }}</div>
+              <div class="booking-room">{{ b.roomName || ('Room ' + b.roomId) }}</div>
+            </div>
+            <p class="no-bookings" *ngIf="bookingsOn(day).length===0">No bookings</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day View -->
+      <div class="day-view-container" *ngIf="viewMode==='day'">
+        <div class="day-bookings-list">
+          <article *ngFor="let b of bookingsOn(viewDate)" class="booking-strip detailed-card" [class.pending]="b.status==='PENDING'">
+            <div class="time-block">
+              <strong>{{ b.startTime | date:'shortTime' }}</strong>
+              <small>{{ b.endTime | date:'shortTime' }}</small>
+            </div>
+            <div class="booking-details">
+              <h4>{{ b.title || 'Meeting' }}</h4>
+              <div class="booking-meta">
+                <span class="room-tag">{{ b.roomName || ('Room ' + b.roomId) }}</span>
+                <span class="status-badge" [class.pending]="b.status==='PENDING'" [class.approved]="b.status==='APPROVED'">{{ b.status }}</span>
+              </div>
+            </div>
+          </article>
+          <p class="empty-state" *ngIf="bookingsOn(viewDate).length===0">No bookings scheduled for today.</p>
+        </div>
+      </div>
+    </section>

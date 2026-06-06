@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./RoomReserve/booking-service/booking-service
+      dockerfile: Dockerfile
+    container_name: roomreserve-backend
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./RoomReserve/room-reserve-frontend
+      dockerfile: Dockerfile
+    container_name: roomreserve-frontend
+    environment:
+      - ROOM_RESERVE_API_BASE=http://backend:8080
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

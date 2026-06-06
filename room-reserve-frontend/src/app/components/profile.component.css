@@ -1,0 +1,113 @@
+.profile-hero {
+  border-left-color: #334155;
+}
+
+.permission-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.permission-grid a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  border: 1px solid rgba(84, 119, 146, 0.4);
+  border-radius: 8px;
+  background: rgba(10, 20, 38, 0.65);
+  padding: 10px 12px;
+  color: #ffffff;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.permission-grid a:hover {
+  border-color: var(--gold);
+  background: rgba(26, 50, 99, 0.4);
+  color: var(--gold);
+  box-shadow: 0 0 10px rgba(255, 197, 112, 0.25);
+}
+
+.booking-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(84, 119, 146, 0.4);
+  background: rgba(26, 50, 99, 0.25);
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 750;
+  color: #ffffff;
+}
+
+.stat-card.pending {
+  background: rgba(255, 197, 112, 0.15);
+  color: var(--gold);
+  border-color: rgba(255, 197, 112, 0.45);
+  text-shadow: 0 0 5px rgba(255, 197, 112, 0.3);
+}
+.stat-card.pending:hover {
+  box-shadow: 0 0 15px rgba(255, 197, 112, 0.35);
+  transform: translateY(-2px);
+}
+
+.stat-card.approved {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.4);
+  text-shadow: 0 0 5px rgba(52, 211, 153, 0.3);
+}
+.stat-card.approved:hover {
+  box-shadow: 0 0 15px rgba(52, 211, 153, 0.35);
+  transform: translateY(-2px);
+}
+
+.stat-card.cancelled {
+  background: rgba(84, 119, 146, 0.15);
+  color: #a3b8cc;
+  border-color: rgba(84, 119, 146, 0.4);
+}
+.stat-card.cancelled:hover {
+  box-shadow: 0 0 15px rgba(84, 119, 146, 0.25);
+  transform: translateY(-2px);
+}
+
+.stat-card.rejected {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.4);
+  text-shadow: 0 0 5px rgba(248, 113, 113, 0.3);
+}
+.stat-card.rejected:hover {
+  box-shadow: 0 0 15px rgba(248, 113, 113, 0.35);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 500px) {
+  .booking-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

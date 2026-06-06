@@ -1,0 +1,71 @@
+<app-alert-banner></app-alert-banner>
+<div class="auth-shell compact-auth">
+  <section class="signup-layout">
+    <div class="signup-copy">
+      <p class="eyebrow">New Employee</p>
+      <h1>Create your RoomReserve account</h1>
+      <p>Employee accounts can search available rooms, book amenities with reservations, manage bookings, and view the shared calendar.</p>
+      <div class="signup-benefits">
+        <span>Room search</span>
+        <span>Amenity booking</span>
+        <span>My Bookings</span>
+      </div>
+    </div>
+
+    <form [formGroup]="fg" (ngSubmit)="submit()" class="auth-card signup-card">
+      <div>
+        <p class="eyebrow">Secure Signup</p>
+        <h2>Create Account</h2>
+      </div>
+
+      <label>
+        Workspace Role
+        <select class="form-select" formControlName="role">
+          <option value="ROLE_USER">User (Employee)</option>
+          <option value="ROLE_APPROVER">Approver</option>
+          <option value="ROLE_ADMIN">Admin</option>
+        </select>
+      </label>
+
+      <label>
+        Full Name
+        <input class="form-control" formControlName="name" placeholder="e.g. Alice Smith" />
+        <small class="error-msg" *ngIf="fg.controls.name.touched && fg.controls.name.errors?.['required']">This field cannot be left empty.</small>
+      </label>
+
+      <label>
+        Email address
+        <input type="email" class="form-control" formControlName="email" autocomplete="email" placeholder="e.g. alice@company.com" />
+        <small class="error-msg" *ngIf="fg.controls.email.touched && fg.controls.email.errors?.['required']">This field cannot be left empty.</small>
+        <small class="error-msg" *ngIf="fg.controls.email.touched && fg.controls.email.errors?.['pattern']">Please enter a valid email address (must contain @ and domain).</small>
+      </label>
+
+      <label>
+        Username
+        <input class="form-control" formControlName="username" autocomplete="username" placeholder="e.g. alice" />
+        <small class="error-msg" *ngIf="fg.controls.username.touched && fg.controls.username.errors?.['required']">This field cannot be left empty.</small>
+        <small class="error-msg" *ngIf="fg.controls.username.touched && fg.controls.username.errors?.['minlength']">Username must be at least 3 characters.</small>
+      </label>
+
+      <label>
+        Password
+        <input type="password" class="form-control" formControlName="password" autocomplete="new-password" placeholder="Min 6 characters with letters & numbers" />
+        <small class="error-msg" *ngIf="fg.controls.password.touched && fg.controls.password.errors?.['required']">This field cannot be left empty.</small>
+        <small class="error-msg" *ngIf="fg.controls.password.touched && !fg.controls.password.errors?.['required'] && (fg.controls.password.errors?.['minlength'] || fg.controls.password.errors?.['pattern'])">Password must be at least 6 characters and contain both letters and numbers.</small>
+      </label>
+
+      <label>
+        Confirm password
+        <input type="password" class="form-control" formControlName="confirmPassword" autocomplete="new-password" placeholder="Confirm your password" />
+        <small class="error-msg" *ngIf="fg.controls.confirmPassword.touched && fg.controls.confirmPassword.errors?.['required']">This field cannot be left empty.</small>
+        <small class="error-msg" *ngIf="fg.controls.confirmPassword.touched && !fg.controls.confirmPassword.errors?.['required'] && !passwordsMatch">Passwords must match.</small>
+      </label>
+
+      <button class="btn btn-primary" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Creating account...' : 'Create account' }}
+      </button>
+
+      <p class="auth-switch">Already have an account? <a routerLink="/login">Sign in</a></p>
+    </form>
+  </section>
+</div>

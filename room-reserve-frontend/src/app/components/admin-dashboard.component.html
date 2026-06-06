@@ -1,0 +1,111 @@
+<app-alert-banner></app-alert-banner>
+<div class="workspace role-workspace admin-home cinematic-container">
+  <!-- Interactive Animated Background Particles -->
+  <div class="particles-container">
+    <div class="particle p-1"></div>
+    <div class="particle p-2"></div>
+    <div class="particle p-3"></div>
+    <div class="particle p-4"></div>
+  </div>
+
+  <header class="role-hero admin-hero" [ngClass]="greetingClass">
+    <div>
+      <p class="eyebrow glow-text">OPERATIONS COMMAND</p>
+      <h1 class="welcome-heading">{{ greeting }}, {{ displayName }}!</h1>
+      <p class="hero-copy">Manage spaces, assets, approval rules, compliance trails, and room availability from focused admin workspaces.</p>
+    </div>
+    
+    <!-- Real-time Digital Clock Card -->
+    <div class="live-clock-card glass">
+      <div class="clock-time">{{ liveTime }}</div>
+      <div class="clock-date">{{ liveDate }}</div>
+    </div>
+  </header>
+
+  <section class="quick-lane cinematic-lane" *ngIf="!active">
+    <a routerLink="/admin" [queryParams]="{ tab: 'rooms' }"><strong>Rooms</strong><small>Create, edit, deactivate, and maintain rooms</small></a>
+    <a routerLink="/admin" [queryParams]="{ tab: 'resources' }"><strong>Resources</strong><small>Manage shared amenities and quantities</small></a>
+    <a routerLink="/admin" [queryParams]="{ tab: 'settings' }"><strong>Facility</strong><small>Set operating hours and maintenance windows</small></a>
+    <a routerLink="/admin" [queryParams]="{ tab: 'compliance' }"><strong>Audit Logs</strong><small>Review booking actions and traceability</small></a>
+  </section>
+
+  <!-- Interactive Command Center Panel -->
+  <section class="admin-overview-section mt-4 mb-4" *ngIf="!active">
+    <div class="panel system-diagnostic-card glass">
+      <div class="panel-header mb-3">
+        <h4 class="text-white font-weight-bold">⚡ Platform Live Diagnostics</h4>
+        <p class="text-muted small">Real-time health check status and resource utilization indicators.</p>
+      </div>
+      <div class="diagnostic-grid">
+        <div class="diag-widget">
+          <span class="diag-icon">🟢</span>
+          <div>
+            <strong>API Gateways</strong>
+            <small>Secure CORS enabled</small>
+          </div>
+          <span class="badge bg-success ms-auto text-dark" style="height: fit-content; padding: 6px 12px; font-size: 0.75rem; font-weight: 800;">Active</span>
+        </div>
+        
+        <div class="diag-widget">
+          <span class="diag-icon">🟢</span>
+          <div>
+            <strong>PostgreSQL DB</strong>
+            <small>Connected, Pools: 15/20</small>
+          </div>
+          <span class="badge bg-success ms-auto text-dark" style="height: fit-content; padding: 6px 12px; font-size: 0.75rem; font-weight: 800;">Stable</span>
+        </div>
+
+        <div class="diag-widget">
+          <span class="diag-icon">⚡</span>
+          <div>
+            <strong>Audit Logger</strong>
+            <small>Automatic Compliance Logging</small>
+          </div>
+          <span class="badge bg-info ms-auto text-dark" style="height: fit-content; padding: 6px 12px; font-size: 0.75rem; font-weight: 800;">Logging</span>
+        </div>
+
+        <div class="diag-widget">
+          <span class="diag-icon">🔒</span>
+          <div>
+            <strong>OAuth 2.0 Security</strong>
+            <small>JWT Session Auth Configured</small>
+          </div>
+          <span class="badge bg-warning ms-auto text-dark" style="height: fit-content; padding: 6px 12px; font-size: 0.75rem; font-weight: 800;">Enforced</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Replaced complex right-side panel with a compact role summary for clarity -->
+    <div class="panel role-summary-card glass text-left p-3">
+      <h4 class="text-white font-weight-bold mb-1">Admin Summary</h4>
+      <p class="text-white small mb-2">Quick actions and status for administrative tasks.</p>
+      <ul class="text-muted small mb-3" style="line-height:1.5;">
+        <li style="color:rgb(166, 223, 153);">Manage rooms, resources, and facility settings</li>
+        <li style="color:rgb(166, 223, 153);">Inspect audit logs and compliance trails</li>
+        <li style="color:rgb(166, 223, 153);">View system health and scheduled maintenance</li>
+      </ul>
+      <div class="d-grid gap-2">
+        <a routerLink="/admin" [queryParams]="{ tab: 'rooms' }" class="btn btn-outline-light btn-sm">Manage Rooms</a>
+        <a routerLink="/admin" [queryParams]="{ tab: 'compliance' }" class="btn btn-outline-light btn-sm">Inspect Logs</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="tab-strip" *ngIf="active">
+    <button type="button" (click)="active='rooms'" [class.active]="active==='rooms'">Rooms</button>
+    <button type="button" (click)="active='resources'" [class.active]="active==='resources'">Resources</button>
+    <button type="button" (click)="active='calendar'" [class.active]="active==='calendar'">Calendar</button>
+    <button type="button" (click)="active='approvals'" [class.active]="active==='approvals'">Approvals</button>
+    <button type="button" (click)="active='settings'" [class.active]="active==='settings'">Facility</button>
+    <button type="button" (click)="active='compliance'" [class.active]="active==='compliance'">Audit Logs</button>
+  </div>
+
+  <div class="active-panel" *ngIf="active">
+    <div *ngIf="active==='rooms'"><app-rooms-tab></app-rooms-tab></div>
+    <div *ngIf="active==='resources'"><app-resources-tab></app-resources-tab></div>
+    <div *ngIf="active==='calendar'"><app-calendar-view></app-calendar-view></div>
+    <div *ngIf="active==='approvals'"><app-approver-queue></app-approver-queue></div>
+    <div *ngIf="active==='settings'"><app-facility-settings-tab></app-facility-settings-tab></div>
+    <div *ngIf="active==='compliance'"><app-compliance-log-tab></app-compliance-log-tab></div>
+  </div>
+</div>

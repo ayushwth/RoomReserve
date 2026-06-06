@@ -1,0 +1,46 @@
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Personal</p>
+          <h3>My Bookings</h3>
+        </div>
+      </div>
+      <div class="booking-grid">
+        <article class="booking-card" *ngFor="let b of bookings" (click)="select(b)">
+          <div class="d-flex justify-content-between gap-2">
+            <strong>{{ b.title || 'Meeting' }}</strong>
+            <span class="status-chip" [class.muted]="b.status==='CANCELLED' || b.status==='REJECTED'">{{ b.status }}</span>
+          </div>
+          <small>{{ b.roomName || ('Room ' + b.roomId) }} · {{ b.startTime | date:'medium' }}</small>
+          <small *ngIf="b.resources?.length">Resources: {{ resourceSummary(b) }}</small>
+          <div class="action-row compact">
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="edit(b); $event.stopPropagation()" [disabled]="b.status==='CANCELLED'">Edit</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" (click)="cancel(b); $event.stopPropagation()" [disabled]="b.status==='CANCELLED'">Cancel</button>
+          </div>
+        </article>
+      </div>
+
+      <form *ngIf="editing" [formGroup]="fg" (ngSubmit)="save()" class="edit-drawer">
+        <div class="section-head">
+          <div><p class="eyebrow">Modify</p><h3>Edit Booking</h3></div>
+        </div>
+        <div class="form-grid">
+          <label>Room<select class="form-select" formControlName="roomId"><option *ngFor="let r of rooms" [value]="r.id">{{ r.name }}</option></select></label>
+          <label>Date<input type="date" class="form-control" formControlName="date" /></label>
+          <label>Start<input type="time" class="form-control" formControlName="start" /></label>
+          <label>End<input type="time" class="form-control" formControlName="end" /></label>
+          <label>Title<input class="form-control" formControlName="title" /></label>
+          <label class="span-2">Description<textarea class="form-control" rows="2" formControlName="description"></textarea></label>
+        </div>
+        <div class="resource-picker">
+          <label class="resource-line" *ngFor="let r of resources">
+            <input type="checkbox" [checked]="selectedResourceIds.has(r.id)" [disabled]="!r.active" (change)="toggleResource(r, $event)" />
+            <span><strong>{{ r.name }}</strong><small>{{ r.type || 'Resource' }} · Qty {{ r.quantity || 1 }}</small></span>
+          </label>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-primary" [disabled]="fg.invalid">Save Changes</button>
+          <button type="button" class="btn btn-outline-secondary" (click)="editing=null">Close</button>
+        </div>
+      </form>
+    </section>

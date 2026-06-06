@@ -1,0 +1,33 @@
+
+    <section class="panel">
+      <div class="section-head">
+        <div><p class="eyebrow">Operating Rules</p><h3>Facility Settings</h3></div>
+      </div>
+      <form [formGroup]="fg" (ngSubmit)="save()">
+        <div class="row">
+          <div class="col-md-3 mb-2">
+            <label class="form-label">Open Time</label>
+            <input type="time" class="form-control" formControlName="openTime" />
+          </div>
+          <div class="col-md-3 mb-2">
+            <label class="form-label">Close Time</label>
+            <input type="time" class="form-control" formControlName="closeTime" />
+          </div>
+          <div class="col-md-6 mb-2">
+            <label class="form-label">Maintenance Start</label>
+            <input type="datetime-local" class="form-control" formControlName="maintenanceStart" />
+          </div>
+          <div class="col-md-6 mb-2">
+            <label class="form-label">Maintenance End</label>
+            <input type="datetime-local" class="form-control" formControlName="maintenanceEnd" />
+          </div>
+          <div class="col-12 mb-2">
+            <label class="form-label">Maintenance Reason</label>
+            <input class="form-control" formControlName="maintenanceReason" />
+          </div>
+        </div>
+        <div class="mt-2">
+          <button class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </section>

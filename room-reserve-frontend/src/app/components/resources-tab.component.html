@@ -1,0 +1,39 @@
+    <div class="split-grid">
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Shared Assets</p>
+            <h3>Resources</h3>
+          </div>
+          <span class="count-pill">{{ resources.length }}</span>
+        </div>
+        <div class="stack-list">
+          <button type="button" class="row-item" *ngFor="let r of resources" (click)="edit(r)">
+            <span>
+              <strong>{{ r.name }}</strong>
+              <small>{{ r.type || 'General' }} · Qty {{ r.quantity || 1 }}</small>
+            </span>
+            <span class="status-chip" [class.muted]="!r.active">{{ r.active ? 'Active' : 'Inactive' }}</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{ editing ? 'Update' : 'Create' }}</p>
+            <h3>{{ editing ? 'Edit Resource' : 'New Resource' }}</h3>
+          </div>
+        </div>
+        <form [formGroup]="fg" (ngSubmit)="save()" class="form-grid">
+          <label>Name<input class="form-control" formControlName="name" /></label>
+          <label>Type<input class="form-control" formControlName="type" /></label>
+          <label>Quantity<input type="number" min="1" class="form-control" formControlName="quantity" /></label>
+          <label class="toggle-line"><input type="checkbox" formControlName="active" /> Active</label>
+          <div class="action-row">
+            <button class="btn btn-primary" [disabled]="fg.invalid">Save</button>
+            <button type="button" class="btn btn-outline-secondary" (click)="reset()">Reset</button>
+          </div>
+        </form>
+      </section>
+    </div>
