@@ -8,6 +8,7 @@
       "src": "/api/(.*)",
       "dest": "https://YOUR_BACKEND_URL/api/$1"
     },
+    { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
