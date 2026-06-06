@@ -1,15 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CalendarViewComponent } from './calendar-view.component';
 import { ApproverQueueComponent } from './approver-queue.component';
 import { AlertBannerComponent } from './alert-banner.component';
 
 @Component({
   selector: 'app-approver-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, ApproverQueueComponent, AlertBannerComponent],
+  imports: [CommonModule, RouterModule, CalendarViewComponent, ApproverQueueComponent, AlertBannerComponent],
   templateUrl: './approver-dashboard.component.html',
-  styleUrls: ['./approver-dashboard.component.css']
+  styleUrl: './approver-dashboard.component.css'
 })
 export class ApproverDashboardComponent implements OnInit, OnDestroy {
   active: 'queue' | null = null;

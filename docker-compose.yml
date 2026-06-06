@@ -2,7 +2,7 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ./RoomReserve/booking-service/booking-service
+      context: ./booking-service/booking-service
       dockerfile: Dockerfile
     container_name: roomreserve-backend
     ports:
@@ -11,7 +11,7 @@ services:
 
   frontend:
     build:
-      context: ./RoomReserve/room-reserve-frontend
+      context: ./room-reserve-frontend
       dockerfile: Dockerfile
     container_name: roomreserve-frontend
     environment:
