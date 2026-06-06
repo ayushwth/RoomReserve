@@ -55,12 +55,12 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         if (allowedOrigins != null && !allowedOrigins.isBlank()) {
             for (String origin : allowedOrigins.split(",")) {
-                config.addAllowedOrigin(origin.trim());
+                config.addAllowedOriginPattern(origin.trim());
             }
         } else {
-            config.addAllowedOrigin("http://localhost:4200");
-            config.addAllowedOrigin("http://127.0.0.1:4200");
-            config.addAllowedOrigin("http://localhost:8081");
+            config.addAllowedOriginPattern("http://localhost:4200");
+            config.addAllowedOriginPattern("http://127.0.0.1:4200");
+            config.addAllowedOriginPattern("http://localhost:8081");
         }
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
