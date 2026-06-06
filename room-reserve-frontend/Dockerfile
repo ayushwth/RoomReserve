@@ -3,6 +3,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig*.json ./
 COPY angular.json ./
+COPY write-env.js ./
+COPY public ./public
 COPY src ./src
 RUN npm ci --silent
 RUN npm run build -- --configuration production
