@@ -20,6 +20,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
     private final JwtUtil jwtUtil;
 
+    @org.springframework.beans.factory.annotation.Value("${cors.allowed-origins:http://localhost:4200,http://127.0.0.1:4200,http://localhost:8081}")
+    private String allowedOrigins;
+
     public SecurityConfig(JwtUtil jwtUtil) { this.jwtUtil = jwtUtil; }
 
     @Bean
@@ -50,8 +53,15 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:4200");
-        config.addAllowedOrigin("http://127.0.0.1:4200");
+        if (allowedOrigins != null && !allowedOrigins.isBlank()) {
+            for (String origin : allowedOrigins.split(",")) {
+                config.addAllowedOrigin(origin.trim());
+            }
+        } else {
+            config.addAllowedOrigin("http://localhost:4200");
+            config.addAllowedOrigin("http://127.0.0.1:4200");
+            config.addAllowedOrigin("http://localhost:8081");
+        }
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.setAllowCredentials(true);

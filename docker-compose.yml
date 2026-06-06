@@ -1,5 +1,19 @@
 version: '3.8'
 services:
+  db:
+    image: mysql:8.0
+    container_name: roomreserve-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: roomreserve
+      MYSQL_USER: roomuser
+      MYSQL_PASSWORD: roompassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: unless-stopped
+
   backend:
     build:
       context: ./booking-service/booking-service
@@ -7,6 +21,13 @@ services:
     container_name: roomreserve-backend
     ports:
       - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/roomreserve?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=roomuser
+      - SPRING_DATASOURCE_PASSWORD=roompassword
+      - CORS_ALLOWED_ORIGINS=http://localhost:8081,http://localhost:4200,http://127.0.0.1:4200
+    depends_on:
+      - db
     restart: unless-stopped
 
   frontend:
@@ -15,9 +36,12 @@ services:
       dockerfile: Dockerfile
     container_name: roomreserve-frontend
     environment:
-      - ROOM_RESERVE_API_BASE=http://backend:8080
+      - ROOM_RESERVE_API_BASE=http://localhost:8080
     ports:
       - "8081:80"
     depends_on:
       - backend
     restart: unless-stopped
+
+volumes:
+  mysql-data:

@@ -8,7 +8,7 @@ RUN npm ci --silent
 RUN npm run build -- --configuration production
 
 FROM nginx:stable-alpine
-COPY --from=builder /app/dist/room-reserve-frontend /usr/share/nginx/html
+COPY --from=builder /app/dist/room-reserve-frontend/browser /usr/share/nginx/html
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 EXPOSE 80
